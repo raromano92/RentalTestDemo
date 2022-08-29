@@ -10,9 +10,9 @@ export default function Header() {
 }
 
 const StyledHeader = styled.View`
-  margin-top: 30px;
+  margin-top: 20px;
   height: 50px;
-  background-color: darkslateblue;
+  background-color: #105e26;
   justify-content: center;
   align-items: center;
 `;
