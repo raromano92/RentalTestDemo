@@ -10,8 +10,9 @@ export default function Header() {
 }
 
 const StyledHeader = styled.View`
-  margin-top: 20px;
-  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  height: 40px;
   background-color: #105e26;
   justify-content: center;
   align-items: center;

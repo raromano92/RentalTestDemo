@@ -1,14 +1,17 @@
 import React from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, FlatList, TextInput} from 'react-native';
 import {useState} from 'react';
+import styled from 'styled-components';
 
 import Header from './app/components/Header';
 import LineItem from './app/components/LineItem';
 
 export default function App() {
+  const [text, setText] = useState('');
   const [lineItems, setLineItems] = useState([
     {
       id: '000309',
+      order: '01',
       name: 'Specialty Drink',
       description: 'Hint BlackBerry',
       qty: 4,
@@ -19,6 +22,7 @@ export default function App() {
     },
     {
       id: '000358',
+      order: '02',
       name: 'Chlorine Tab',
       description: 'Pool Maintenance',
       qty: 3,
@@ -29,6 +33,7 @@ export default function App() {
     },
     {
       id: '000410',
+      order: '03',
       name: 'Air Filter',
       description: 'Replacement for AC unit',
       qty: 4,
@@ -39,6 +44,7 @@ export default function App() {
     },
     {
       id: '000553',
+      order: '04',
       name: 'Weed Wacker',
       description: 'Used for Landscaping jobs',
       qty: 2,
@@ -49,8 +55,9 @@ export default function App() {
     },
     {
       id: '000691',
+      order: '05',
       name: 'Coffee Filter',
-      description: 'Hint BlackBerry',
+      description: 'Folgers Brand',
       qty: 6,
       lastQty: 14,
       fillCap: 1,
@@ -59,6 +66,7 @@ export default function App() {
     },
     {
       id: '000732',
+      order: '06',
       name: 'Lipton Tea',
       description: 'Unsweetened Packets',
       qty: 11,
@@ -72,10 +80,23 @@ export default function App() {
   return (
     <View>
       <Header />
+      <StyledInput placeholder="Search for item..." />
       <FlatList
         data={lineItems}
+        nestedScrollEnabled={true}
         renderItem={({item}) => <LineItem item={item} />}
       />
     </View>
   );
 }
+
+const StyledInput = styled.TextInput`
+  background-color: #ededed;
+  height: 25px;
+  width: 250px;
+  text-align: center;
+  padding-bottom: 0px;
+  margin: 0 auto;
+  margin-top: -5px
+  border-radius: 15px;
+`;
