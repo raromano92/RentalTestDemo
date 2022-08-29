@@ -7,7 +7,13 @@ import Header from './app/components/Header';
 import LineItem from './app/components/LineItem';
 
 export default function App() {
-  const [text, setText] = useState('');
+  const [text, onChangeText] = useState('');
+  const [newItem, findNewItem] = useState([{...lineItems, newItem}]);
+
+  const onSearch = () => {
+    lineItems.find(lineItem => findNewItem(lineItem.name));
+  };
+
   const [lineItems, setLineItems] = useState([
     {
       id: '000309',
@@ -80,7 +86,12 @@ export default function App() {
   return (
     <View>
       <Header />
-      <StyledInput placeholder="Search for item..." />
+      <StyledInput
+        multiline
+        placeholder="Search for item..."
+        onChangeText={onSearch}
+        text={text}
+      />
       <FlatList
         data={lineItems}
         nestedScrollEnabled={true}

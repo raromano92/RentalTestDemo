@@ -7,100 +7,103 @@ export default function LineItem({item}) {
 
   return (
     <TouchableOpacity>
-      <StyledContainer>
-        <StyledOrderView>
-          <StyledOrder>{item.order}</StyledOrder>
-        </StyledOrderView>
-        <StyledItemView>
-          <StyledName>
+      <Container>
+        <OrderView>
+          <Order>{item.order}</Order>
+        </OrderView>
+        <ItemView>
+          <Name>
             {item.name}: {item.id}
-          </StyledName>
+          </Name>
 
-          <StyledItemDetails>{item.description}</StyledItemDetails>
-          <StyledDetailsView>
-            <StyledItemDetails>QTY: {item.qty}</StyledItemDetails>
-            <StyledItemDetails>LAST QTY: {item.lastQty}</StyledItemDetails>
-            <StyledItemDetails>FILL CAP: {item.fillCap}</StyledItemDetails>
-          </StyledDetailsView>
-          <StyledItemDetails>WAREHOUSE: {item.wareHouse}</StyledItemDetails>
-        </StyledItemView>
-        <StyledPricingView>
-          <StyledPrice>{'$' + item.qty * item.price}</StyledPrice>
-          <StyledCalculation>
+          <ItemDetails>{item.description}</ItemDetails>
+          <DetailsView>
+            <ItemDetails>QTY: {item.qty}</ItemDetails>
+            <ItemDetails>LAST QTY: {item.lastQty}</ItemDetails>
+            <ItemDetails>FILL CAP: {item.fillCap}</ItemDetails>
+          </DetailsView>
+          <ItemDetails>WAREHOUSE: {item.wareHouse}</ItemDetails>
+        </ItemView>
+        <PricingView>
+          <Price>
+            {'$'}&nbsp;{item.qty * item.price}
+          </Price>
+          <Calculation>
             {item.qty} x {'$' + item.price}
-          </StyledCalculation>
-        </StyledPricingView>
-      </StyledContainer>
+          </Calculation>
+        </PricingView>
+      </Container>
     </TouchableOpacity>
   );
 }
 
-const StyledContainer = styled.View`
+const Container = styled.View`
   padding: 5px;
-  height: 90px;
+  height: 100px;
   background-color: #ededed;
   margin: 5px;
   margin-top: 20px;
   border-radius: 10px;
 `;
 
-const StyledOrder = styled.Text`
+const Order = styled.Text`
   color: #105e26;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 600
   text-align: center;
+ 
 `;
 
-const StyledOrderView = styled.View`
-  margin-top: 5px;
-  width: 12px;
+const OrderView = styled.View`
+  margin: 5px;
+  width: 20px;
   border-radius: 3px;
   background-color: #fffec8;
-  padding: 0px;
+  padding: 1px;
 `;
 
-const StyledName = styled.Text`
+const Name = styled.Text`
   color: #192841;
-  font-size: 14px;
-  font-weight: 500
+  font-size: 18px;
+  font-weight: 600
   padding-left: 20px;
 `;
 
-const StyledPrice = styled.Text`
+const Price = styled.Text`
   color: #303030;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
 `;
 
-const StyledPricingView = styled.View`
+const PricingView = styled.View`
   position: absolute;
-  margin-left: 280px;
-  margin-top: 30px;
+  margin-left: 380px;
+  margin-top: 25px;
+  height: 60px;
 `;
 
-const StyledDetailsView = styled.View`
+const DetailsView = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
 `;
 
-const StyledItemView = styled.View`
+const ItemView = styled.View`
   display: flex;
   flex-direction: column;
-  padding-top: 3px;
-  padding-left: 3px;
-  margin-top: -20px;
+  padding-left: 15px;
+  margin-top: -25px;
 `;
 
-const StyledItemDetails = styled.Text`
+const ItemDetails = styled.Text`
   color: #333
-  font-size: 12px
+  font-size: 14px
   line-height: 20px
   margin-left: 20px
   
 `;
 
-const StyledCalculation = styled.Text`
-  font-size: 10px;
+const Calculation = styled.Text`
+  font-size: 12px;
   text-align: right;
 `;
