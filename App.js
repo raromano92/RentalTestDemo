@@ -1,113 +1,168 @@
 import React from 'react';
-import {View, FlatList, TextInput} from 'react-native';
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
+import { View, FlatList, TouchableOpacity, TextInput } from 'react-native';
+
 import styled from 'styled-components';
 
 import Header from './app/components/Header';
-import LineItem from './app/components/LineItem';
+import lineItems from './app/components/LineItemData';
 
 export default function App() {
-  const [text, onChangeText] = useState('');
-  const [newItem, findNewItem] = useState([{...lineItems, newItem}]);
+  const [search, setSearch] = useState('');
+  const [fullData, setFullData] = useState([]);
+  const [data, setData] = useState(lineItems);
 
-  const onSearch = () => {
-    lineItems.find(lineItem => findNewItem(lineItem.name));
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = () => {
+    const res = data;
+
+    setFullData(res);
   };
 
-  const [lineItems, setLineItems] = useState([
-    {
-      id: '000309',
-      order: '01',
-      name: 'Specialty Drink',
-      description: 'Hint BlackBerry',
-      qty: 4,
-      lastQty: 5,
-      fillCap: 0,
-      wareHouse: 'W3',
-      price: 25.27,
-    },
-    {
-      id: '000358',
-      order: '02',
-      name: 'Chlorine Tab',
-      description: 'Pool Maintenance',
-      qty: 3,
-      lastQty: 10,
-      fillCap: 2,
-      wareHouse: 'W2',
-      price: 44.99,
-    },
-    {
-      id: '000410',
-      order: '03',
-      name: 'Air Filter',
-      description: 'Replacement for AC unit',
-      qty: 4,
-      lastQty: 18,
-      fillCap: 3,
-      wareHouse: 'W4',
-      price: 28.63,
-    },
-    {
-      id: '000553',
-      order: '04',
-      name: 'Weed Wacker',
-      description: 'Used for Landscaping jobs',
-      qty: 2,
-      lastQty: 8,
-      fillCap: 5,
-      wareHouse: 'W1',
-      price: 34.52,
-    },
-    {
-      id: '000691',
-      order: '05',
-      name: 'Coffee Filter',
-      description: 'Folgers Brand',
-      qty: 6,
-      lastQty: 14,
-      fillCap: 1,
-      wareHouse: 'W6',
-      price: 6.28,
-    },
-    {
-      id: '000732',
-      order: '06',
-      name: 'Lipton Tea',
-      description: 'Unsweetened Packets',
-      qty: 11,
-      lastQty: 20,
-      fillCap: 7,
-      wareHouse: 'W5',
-      price: 8.64,
-    },
-  ]);
+  const handleFilter = text => {
+    const updatedData = lineItems.filter(item => {
+      const item_data = `${item.name.toUpperCase()})`;
+      const text_data = text.toUpperCase();
+      if (text.length > 0) {
+        return item_data.indexOf(text_data) > -1;
+      } else return data;
+    });
+
+    setData(updatedData);
+    setSearch(text);
+  };
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <TouchableOpacity>
+        <Container>
+          <OrderView>
+            <Order>{item.order}</Order>
+          </OrderView>
+          <ItemView>
+            <Name>
+              {item.name}: {item.id}
+            </Name>
+            <ItemDetails>{item.description}</ItemDetails>
+            <DetailsView>
+              <ItemDetails>QTY: {item.qty}</ItemDetails>
+              <ItemDetails>LAST QTY: {item.lastQty}</ItemDetails>
+              <ItemDetails>FILL CAP: {item.fillCap}</ItemDetails>
+            </DetailsView>
+            <ItemDetails>WAREHOUSE: {item.wareHouse}</ItemDetails>
+          </ItemView>
+          <PricingView>
+            <Price>
+              {'$'}&nbsp;{item.qty * item.price}
+            </Price>
+            <Calculation>
+              {item.qty} x {'$' + item.price}
+            </Calculation>
+          </PricingView>
+        </Container>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View>
       <Header />
-      <StyledInput
-        multiline
+      <Input
         placeholder="Search for item..."
-        onChangeText={onSearch}
-        text={text}
+        onChangeText={text => handleFilter(text)}
+        value={search}
       />
       <FlatList
-        data={lineItems}
-        nestedScrollEnabled={true}
-        renderItem={({item}) => <LineItem item={item} />}
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
       />
     </View>
   );
 }
 
-const StyledInput = styled.TextInput`
+const Input = styled.TextInput`
+    background-color: #ededed;
+    height: 25px;
+    width: 250px;
+    text-align: center;
+    padding-bottom: 0px;
+    margin: 0 auto;
+    margin-top: -5px
+    border-radius: 5px;
+  `;
+
+const Container = styled.View`
+  padding: 5px;
+  height: 100px;
   background-color: #ededed;
-  height: 25px;
-  width: 250px;
+  margin: 5px;
+  margin-top: 20px;
+  border-radius: 10px;
+`;
+
+const Order = styled.Text`
+  color: #105e26;
+  font-size: 10px;
+  font-weight: 600
   text-align: center;
-  padding-bottom: 0px;
-  margin: 0 auto;
-  margin-top: -5px
-  border-radius: 15px;
+
+`;
+
+const OrderView = styled.View`
+  margin: 5px;
+  width: 20px;
+  border-radius: 3px;
+  background-color: #fffec8;
+  padding: 1px;
+`;
+
+const Name = styled.Text`
+  color: #192841;
+  font-size: 18px;
+  font-weight: 600
+  padding-left: 20px;
+`;
+
+const Price = styled.Text`
+  color: #303030;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+`;
+
+const PricingView = styled.View`
+  position: absolute;
+  margin-left: 80%;
+  margin-top: 25px;
+  height: 60px;
+`;
+
+const DetailsView = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+`;
+
+const ItemView = styled.View`
+  display: flex;
+  flex-direction: column;
+  padding-left: 15px;
+  margin-top: -25px;
+`;
+
+const ItemDetails = styled.Text`
+  color: #333
+  font-size: 14px
+  line-height: 20px
+  margin-left: 20px
+
+`;
+
+const Calculation = styled.Text`
+  font-size: 12px;
+  text-align: center;
 `;
