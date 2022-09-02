@@ -81,3 +81,17 @@ export const Input = styled.TextInput`
   margin-top: -5px;
   border-radius: 10px;
 `;
+
+export const StyledHeader = styled.View`
+  margin-top: 10px;
+  margin-bottom: 20px;
+  height: 40px;
+  background-color: #105e26;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const StyledText = styled.Text`
+  color: white;
+  font-size: 24px;
+`;
